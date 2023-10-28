@@ -32,4 +32,12 @@
             @endforeach
         </tbody>
     </table>
+
+    <nav class="mt-3">
+        <ul class="pagination justify-content-center">
+            <li>
+                {{ $users->appends(request()->except('_token'))->links() }}
+            </li>
+        </ul>
+    </nav>
 </div>
