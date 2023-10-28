@@ -12,6 +12,13 @@ class User extends Component
     public $name;
     #[Rule('required|email|unique:users')]
     public $email;
+    protected $messages = [
+        'name.required' => 'Nome é obrigatório.',
+        'name.min' => 'O nome deve ter pelo menos :min caracteres.',
+        'email.required' => 'Email é obrigatório.',
+        'email.email' => 'Email inválido.',
+        'email.unique' => 'Email já cadastrado.'
+    ];
     public function create(){
         $this->validate();
         ModelsUser::create(['name' => $this->name,'email' => $this->email]);

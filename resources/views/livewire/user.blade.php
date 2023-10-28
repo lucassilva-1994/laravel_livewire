@@ -8,7 +8,7 @@
         <div class="mb-3 col-md-4">
             <label for="email" class="form-label">Email:</label>
             <input type="email" class="form-control" id="email" placeholder="Seu email" wire:model="email"
-                name="email" />
+                name="email"/>
         </div>
         <div class="mb-3 col-md-4 d-grid"><br />
             <button class="btn btn-success btn-sm">Salvar</button>
