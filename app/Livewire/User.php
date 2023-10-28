@@ -1,9 +1,10 @@
 <?php
-
 namespace App\Livewire;
 
 use App\Models\User as ModelsUser;
+use Livewire\Attributes\Layout;
 use Livewire\Attributes\Rule;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -23,11 +24,14 @@ class User extends Component
     ];
     public function create(){
         $this->validate();
-        ModelsUser::create(['name' => $this->name,'email' => $this->email]);
+        ModelsUser::create($this->all());
         $this->reset();
-        request()->session()->flash('success','Sucesso.');
+        session()->flash('success','Sucesso.');
+        $this->redirect('/', navigate: true);
     }
 
+    #[Title('Usuários')]
+    #[Layout('components.layouts.app')]
     public function render()
     {
         $title = "Usuários";
