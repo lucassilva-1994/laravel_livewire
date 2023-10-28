@@ -11,6 +11,8 @@ use Livewire\WithPagination;
 class User extends Component
 {
     use WithPagination;
+    public $search;
+
     #[Rule('required| min:3')]
     public $name;
     #[Rule('required|email|unique:users')]
@@ -28,6 +30,14 @@ class User extends Component
         $this->reset();
         session()->flash('success','Sucesso.');
         $this->redirect('/', navigate: true);
+        $this->resetPage();
+    }
+
+    public function delete(int $id){
+        if(ModelsUser::whereId($id)->delete())
+            $this->redirect('/', navigate: true);
+            return session()->flash('success','Sucesso');
+        return session()->flash('error','Falha ao remover.');
     }
 
     #[Title('Usuários')]
@@ -35,7 +45,9 @@ class User extends Component
     public function render()
     {
         $title = "Usuários";
-        $users = ModelsUser::latest()->paginate(5);
+        $users = ModelsUser::latest()->
+            where('name','like', "%{$this->search}%")
+            ->orWhere('email','like', "%{$this->search}%")->paginate();
         return view('livewire.user', [
             'title' => $title,
             'users' => $users
