@@ -26,16 +26,23 @@ class Home extends Component
         return session()->flash('error','Falha ao realizar post');
     }
 
+    public function delete(string $id){
+        if(Post::whereId($id)->delete())
+            $this->redirect('/', navigate: true);
+            return session()->flash('success','Post removido');
+        return session()->flash('error','Falha ao remover.');
+    }
+
     public function logout(){
-        auth()->logout();
-        return $this->redirect('/', navigate: true);
+         auth()->logout();
+         return $this->redirect('home', navigate:true);
     }
 
     #[Layout('components.layouts.app')]
     #[Title('Home')]
     public function render()
     {
-        $posts = Post::latest('id')->get();
+        $posts = Post::latest('order')->get();
         return view('livewire.home',compact('posts'));
     }
 }

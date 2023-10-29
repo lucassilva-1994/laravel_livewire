@@ -31,7 +31,7 @@
                         <td>{{ $user->email }}</td>
                         <td>
                             <button class="btn btn-danger btn-sm"
-                                wire:click="delete({{ $user->id }})">Excluir</button>
+                                wire:click="delete({{ '$user->id' }})">Excluir</button>
                         </td>
                     </tr>
                 @endforeach

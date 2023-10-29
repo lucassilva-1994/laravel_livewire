@@ -18,3 +18,7 @@
     </ul>
 </div>
 @endif
+
+<div class="text-primary" wire:loading wire:target="create">
+    Aguarde...
+</div>

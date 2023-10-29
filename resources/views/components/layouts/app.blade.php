@@ -8,6 +8,7 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <title>{{ $title ?? 'Blog' }}</title>
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg mb-3" style="background-color: #3a092a;">
         <div class="container">
@@ -27,12 +28,12 @@
                                 wire:navigate>Cadastre-se</a>
                         </li>
                     @else
-                    <li class="nav-item">
-                        <a class="nav-link link-light">{{ auth()->user()->username }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link link-light" href="{{ route('logout') }}">Sair</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link link-light">{{ auth()->user()->username }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link link-light" href="{{ route('logout') }}">Sair</a>
+                        </li>
                     @endif
                 </ul>
             </div>
