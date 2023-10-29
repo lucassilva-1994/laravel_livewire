@@ -13,6 +13,9 @@ class SignIn extends Component
     #[Rule('required|exists:users')]
     public $username;
     public $password;
+    protected $messages = [
+        'username.exists' => 'Usuário não cadastrado.'
+    ];
 
     public function auth(){
         $this->validate();

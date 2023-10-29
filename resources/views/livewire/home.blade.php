@@ -1,6 +1,7 @@
-<div wire:poll.20s>
-    <div class="row justify-content-md-center mb-3">
+<div>
+    <div class="row justify-content-md-center mb-3"  wire:poll.20s>
         <div class="col-sm-12 col-md-10 col-lg-10 rounded">
+            @include('message')
             @if (isset(auth()->user()->username))
                 <div>
                     <form wire:submit="create">
@@ -12,7 +13,12 @@
                         <div class="mb-2">
                             <textarea placeholder="Conteúdo" class="form-control" wire:model="content"></textarea>
                         </div>
-                        @include('message')
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" wire:model.live="allowComments">
+                            <label class="form-check-label" for="allowComments">
+                              Permitir comentário?
+                            </label>
+                          </div>
                         <div class="col-md-6 d-grid">
                             <button class="btn btn-primary">Postar</button>
                         </div>

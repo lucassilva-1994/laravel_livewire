@@ -12,14 +12,16 @@ use Livewire\Component;
 class Home extends Component
 {
     public $user_id;
+    public $title;
     #[Rule('required|min:3|max:255')]
     public $content;
 
-    public $title;
+    public $allowComments = true;
 
     public function create(){
         $this->validate();
         $this->user_id = auth()->user()->id;
+        $this->allowComments == 1 ?  $this->allowComments = 1: $this->allowComments = 0;
         if(HelperModel::setData($this->all(), Post::class))
             $this->reset();
             return session()->flash('success','Poste criado com sucesso.');

@@ -9,7 +9,7 @@ class Post extends Model
 {
     use SoftDeletes;
     protected $table = 'posts';
-    protected $fillable = ['id','order','title','content','user_id'];
+    protected $fillable = ['id','order','title','content','user_id','allowComments'];
     protected $keyType = 'string';
     public $incrementing = false;
 

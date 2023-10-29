@@ -15,6 +15,7 @@ return new class extends Migration
             $table->string('title',100);
             $table->longText('content');
             $table->foreignUuid('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->boolean('allowComments')->default(1);
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
             $table->softDeletes();
