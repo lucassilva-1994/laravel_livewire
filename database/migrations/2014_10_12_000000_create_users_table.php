@@ -10,10 +10,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create($this->table, function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->uuid('id')->primary();
+            $table->bigInteger('order');
             $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamps();
+            $table->string('username',100)->unique();
+            $table->string('email',100)->unique();
+            $table->string('password',100);
+            $table->dateTime('created_at');
+            $table->dateTime('updated_at');
         });
     }
 

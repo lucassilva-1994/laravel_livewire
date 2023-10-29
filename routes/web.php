@@ -1,8 +1,16 @@
 <?php
 
 use App\Livewire\{
-    User
+    Home,
+    SignIn,
+    SignUp
 };
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', User::class)->name('home');
+Route::get('/', Home::class)->name('home');
+Route::get('/logout', Home::class)->name('logout');
+
+Route::prefix('/user')->group(function(){
+    Route::get('/signin', SignIn::class)->name('user.signin');
+    Route::get('/signup', SignUp::class)->name('user.signup');
+});

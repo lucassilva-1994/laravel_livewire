@@ -10,11 +10,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create($this->table, function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
+            $table->bigInteger('order');
+            $table->string('title',100);
             $table->longText('content');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->timestamps();
+            $table->foreignUuid('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->dateTime('created_at');
+            $table->dateTime('updated_at');
+            $table->softDeletes();
         });
     }
 

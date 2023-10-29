@@ -6,5 +6,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     protected $table = 'users';
-    protected $fillable = ['name','email'];
+    protected $fillable = ['id','order','name','username','email','password'];
+    protected $keyType = 'string';
+    public $incrementing = false;
+
+    public function posts(){
+        return $this->hasMany(Post::class,'user_id','id');
+    }
 }
