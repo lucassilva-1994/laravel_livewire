@@ -32,7 +32,7 @@
                             <a class="nav-link link-light">{{ auth()->user()->username }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link link-light" href="{{ route('logout') }}">Sair</a>
+                            <a class="nav-link link-light" href="{{ route('logout') }}" wire:navigate>Sair</a>
                         </li>
                     @endif
                 </ul>

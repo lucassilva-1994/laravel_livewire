@@ -2,15 +2,17 @@
 
 namespace App\Livewire;
 
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
 class Home extends Component
 {
     public function logout(){
-         auth()->logout();
-         return $this->redirect('home', navigate:true);
+        Auth::logout();
+        return redirect('/');
     }
 
     #[Layout('components.layouts.app')]
