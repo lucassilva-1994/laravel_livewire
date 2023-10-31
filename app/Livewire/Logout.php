@@ -8,6 +8,6 @@ class Logout extends Component
 {
     public function mount(){
         auth()->logout();
-        return redirect('/');
+        return $this->redirect('/', navigate:true);
     }
 }

@@ -13,17 +13,18 @@ class SignIn extends Component
     #[Rule('required|exists:users')]
     public $username;
     public $password;
-    protected $messages = [
-        'username.exists' => 'Usuário não cadastrado.'
-    ];
+
+    public function updated($propertyName){
+        $this->validateOnly($propertyName);
+    }
 
     public function auth(){
         $this->validate();
         $credentials = $this->only(['username','password']);
         if(Auth::attempt($credentials))
-            session()->flash('success','Autenticado com sucesso.');
             return $this->redirect('/', navigate:true);
-        return session()->flash('error','Falha na Autenticação.');
+        session()->flash('error','Falha na Autenticação.');
+        return $this->redirect('/user/signin', navigate:true);
     }
 
     #[Layout('components.layouts.app')]

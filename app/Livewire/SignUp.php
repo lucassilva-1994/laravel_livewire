@@ -13,12 +13,16 @@ class SignUp extends Component
 {
     #[Rule('required|min:3|max:100')]
     public $name;
-    #[Rule('required|min:3|max:100')]
+    #[Rule('required|min:3|max:100|unique:users')]
     public $username;
     #[Rule('required|min:3|max:100|unique:users')]
     public $email;
     #[Rule('required|min:3|max:100')]
     public $password;
+
+    public function updated($propertyName){
+        $this->validateOnly($propertyName);
+    }
 
     public function create(){
         $this->validate();

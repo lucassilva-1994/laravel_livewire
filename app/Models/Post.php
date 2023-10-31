@@ -12,6 +12,7 @@ class Post extends Model
     protected $fillable = ['id','order','title','content','user_id','allowComments'];
     protected $keyType = 'string';
     public $incrementing = false;
+    //protected $with = ['comments','user'];
 
     public function getCreatedAtAttribute(){
         return date('d/m/Y H:i:s', strtotime($this->attributes['created_at']));

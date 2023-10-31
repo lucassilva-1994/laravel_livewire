@@ -1,10 +1,10 @@
-<div wire:poll.1s>
+<div wire:poll.10s>
     @if ($posts->isNotEmpty())
         <div class="mt-3">
             @foreach ($posts as $post)
                 <div class="card mb-2">
                     <div class="card-header">
-                        <h4>{{ $post->title }}</h4>
+                        <h4>{{ str($post->title)->words(3) }}</h4>
                     </div>
                     <div class="card-body">
                         <h5>{{ $post->content }}</h5>
@@ -30,7 +30,7 @@
                                 </span>
                                 <span class="col-md-2">
                                     {{ $comment->created_at }}
-                                </span>
+                                </span><hr/>
                             @endforeach
                         </div>
                     </div>

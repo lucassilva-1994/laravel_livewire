@@ -31,13 +31,7 @@ class User extends Component
     public $name;
     #[Rule('required|email|unique:users')]
     public $email;
-    protected $messages = [
-        'name.required' => 'Nome é obrigatório.',
-        'name.min' => 'O nome deve ter pelo menos :min caracteres.',
-        'email.required' => 'Email é obrigatório.',
-        'email.email' => 'Email inválido.',
-        'email.unique' => 'Email já cadastrado.'
-    ];
+
     public function create(){
         $this->validate();
         ModelsUser::create($this->all());
@@ -48,21 +42,23 @@ class User extends Component
     }
 
     public function createUser(){
-        HelperModel::setData([
-            'name' => fake()->name(),
-            'username' => fake()->userName(),
-            'email' => fake()->email(),
-            'password' => '12345678910'
-        ], ModelsUser::class);
-        session()->flash('success','Sucesso.');
-        $this->redirect('/users', navigate: true);
+        for($i=0;$i<10;$i++){
+            HelperModel::setData([
+                'name' => fake()->name,
+                'username' => fake()->userName(),
+                'email' => fake()->freeEmail(),
+                'password' => '12345678910',
+                'about_me' => fake()->realText()
+            ], ModelsUser::class);
+        }
+        session()->flash('success','Cadastrado com sucesso.');
+        //$this->redirect('/users', navigate: true);
     }
 
     public function delete(string $id){
         if(ModelsUser::whereId($id)->delete())
-            $this->redirect('/users', navigate: true);
-            return session()->flash('success','Sucesso');
-        return session()->flash('error','Falha ao remover.');
+            return session()->flash('success','Excluido com sucesso.');
+        return session()->flash('error','Falha ao excluir usuário.');
     }
 
     #[Title('Usuários')]
@@ -73,12 +69,15 @@ class User extends Component
         $users = ModelsUser::latest()->
             where('name','like', "%{$this->search}%")
             ->orWhere('email','like', "%{$this->search}%")
+            ->orWhere('username','like', "%{$this->search}%")
             ->orderBy($this->sortBy, $this->sortDir)
             ->paginate($this->perPage);
+        $allUsers = ModelsUser::get();
         $this->resetPage();
         return view('livewire.user', [
             'title' => $title,
-            'users' => $users
+            'users' => $users,
+            'allUsers' => $allUsers
         ]);
     }
 }

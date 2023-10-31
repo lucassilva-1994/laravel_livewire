@@ -1,14 +1,15 @@
 <div>
     @if (isset(auth()->user()->username))
-        <div>
+        <div class="row">
+            @include('message')
             <form wire:submit="create">
                 <div class="mb-2">
                     <label for="title">Titulo:</label>
-                    <input type="text" placeholder="Titulo do post" class="form-control" id="title"
-                        wire:model="title" autofocus />
+                    <input type="text" placeholder="Titulo do post" class="form-control"
+                        wire:model.live="title" autofocus />
                 </div>
                 <div class="mb-2">
-                    <textarea placeholder="Conteúdo" rows="5" class="form-control" wire:model="content"></textarea>
+                    <textarea placeholder="Conteúdo" rows="5" class="form-control" wire:model.live="content"></textarea>
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" id="allowComments" type="checkbox" wire:model="allowComments">
