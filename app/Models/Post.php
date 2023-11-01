@@ -12,7 +12,7 @@ class Post extends Model
     protected $fillable = ['id','order','title','content','user_id','allowComments'];
     protected $keyType = 'string';
     public $incrementing = false;
-    //protected $with = ['comments','user'];
+    protected $with = ['likes','likesPosts','user'];
 
     public function getCreatedAtAttribute(){
         return date('d/m/Y H:i:s', strtotime($this->attributes['created_at']));
@@ -30,7 +30,16 @@ class Post extends Model
         return $this->hasMany(Comment::class,'post_id','id')->latest('order');
     }
 
+    public function likesPosts(){
+        return $this->hasMany(Like::class,'post_id','id')->latest('id');
+    }
+
     public function likes(){
-        return $this->hasMany(Like::class,'post_id','id');
+        return $this->hasMany(Like::class,'post_id','id')
+                    ->where(function($query){
+                        if(auth()->check()){
+                            $query->where('user_id', auth()->user()->id);
+                        }
+                    });
     }
 }

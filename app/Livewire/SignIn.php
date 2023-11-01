@@ -23,8 +23,7 @@ class SignIn extends Component
         $credentials = $this->only(['username','password']);
         if(Auth::attempt($credentials))
             return $this->redirect('/', navigate:true);
-        session()->flash('error','Falha na Autenticação.');
-        return $this->redirect('/user/signin', navigate:true);
+        return session()->flash('error','Falha na Autenticação.');
     }
 
     #[Layout('components.layouts.app')]

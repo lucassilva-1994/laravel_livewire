@@ -9,7 +9,7 @@ class User extends Authenticatable
     protected $fillable = ['id','order','name','username','email','password','about_me'];
     protected $keyType = 'string';
     public $incrementing = false;
-
+ 
     public function posts(){
         return $this->hasMany(Post::class,'user_id','id');
     }
@@ -19,6 +19,6 @@ class User extends Authenticatable
     }
 
     public function likes(){
-        return $this->hasMany(Like::class);
+        return $this->hasMany(Like::class,'user_id','id');
     }
 }

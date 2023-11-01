@@ -31,7 +31,7 @@ class PostForm extends Component
         $this->allowComments == 1 ?  $this->allowComments = 1: $this->allowComments = 0;
         $this->dispatch('post-list');
         if(HelperModel::setData($this->all(), Post::class))
-            return session()->flash('success','Poste criado com sucesso.');
+            return session()->flash('success','Post criado com sucesso.');
             $this->reset();
         // $users = User::get();
         // foreach ($users as $user) {
@@ -42,7 +42,7 @@ class PostForm extends Component
         //         'content' => fake()->realText()
         //     ], Post::class);
         // }
-        return session()->flash('success','Poste criado com sucesso.');
+        // return session()->flash('success','Post criado com sucesso.');
         return session()->flash('error', 'Falha ao realizar post');
     }
 

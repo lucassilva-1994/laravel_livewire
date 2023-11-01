@@ -10,8 +10,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create($this->table, function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->foreignUuid('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignUuid('post_id')->references('id')->on('posts')->onDelete('cascade');
+            $table->dateTime('created_at');
         });
     }
 

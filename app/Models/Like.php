@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 class Like extends Model
 {
     protected $table = 'likes';
-    protected $fillable = ['user_id','post_id'];
+    protected $fillable = ['user_id','post_id','created_at'];
     public $timestamps = false;
 
     public function user(){
@@ -14,6 +14,6 @@ class Like extends Model
     }
 
     public function post(){
-        return $this->belongsTo(Post::class);
+        return $this->belongsTo(Post::class,'post_id','id');
     }
 }

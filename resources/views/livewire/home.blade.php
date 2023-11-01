@@ -3,5 +3,5 @@
         <strong>Carregando...</strong>
     </span>
     @livewire('post.post-form')
-    @livewire('post.post-show', ['lazy' => true])
+    @livewire('post.post-show')
 </div>
