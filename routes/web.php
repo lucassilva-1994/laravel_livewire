@@ -3,6 +3,7 @@
 use App\Livewire\{
     Home,
     Logout,
+    Profile,
     SignIn,
     SignUp,
     User
@@ -17,6 +18,7 @@ Route::get('/users', User::class)->name('users');
 Route::prefix('/user')->group(function(){
     Route::get('/signin', SignIn::class)->name('user.signin');
     Route::get('/signup', SignUp::class)->name('user.signup');
+    Route::get('/profile/{id}',Profile::class)->name('user.profile');
 });
 
 Route::get('/post/edit/{id}', PostEdit::class)->name('post.edit');

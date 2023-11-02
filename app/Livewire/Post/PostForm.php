@@ -31,18 +31,20 @@ class PostForm extends Component
         $this->allowComments == 1 ?  $this->allowComments = 1: $this->allowComments = 0;
         $this->dispatch('post-list');
         if(HelperModel::setData($this->all(), Post::class))
-            return session()->flash('success','Post criado com sucesso.');
             $this->reset();
-        // $users = User::get();
-        // foreach ($users as $user) {
-        //     HelperModel::setData([
-        //         'user_id' => $user->id,
-        //         'allowComments' => 1,
-        //         'title' => fake()->jobTitle(),
-        //         'content' => fake()->realText()
-        //     ], Post::class);
+            return session()->flash('success','Post criado com sucesso.');
+        // for ($i = 0; $i < 20; $i++) {
+        //     $users = User::get();
+        //     foreach ($users as $user) {
+        //         HelperModel::setData([
+        //             'user_id' => $user->id,
+        //             'allowComments' => 1,
+        //             'title' => fake()->jobTitle(),
+        //             'content' => fake()->realText()
+        //         ], Post::class);
+        //     }
         // }
-        // return session()->flash('success','Post criado com sucesso.');
+        // return session()->flash('success', 'Post criado com sucesso.');
         return session()->flash('error', 'Falha ao realizar post');
     }
 

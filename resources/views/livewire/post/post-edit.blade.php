@@ -5,7 +5,7 @@
             <form wire:submit="update">
                 <div class="mb-2">
                     <label for="title">Titulo:</label>
-                    <input type="text" placeholder="Titulo do post" class="form-control" id="title" wire:model.live="title"
+                    <input type="text" placeholder="Titulo" class="form-control" id="title" wire:model.live="title"
                         autofocus />
                 </div>
                 <div class="mb-2">

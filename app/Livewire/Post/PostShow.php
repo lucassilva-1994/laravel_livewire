@@ -19,31 +19,35 @@ class PostShow extends Component
     public $comment;
     public $perPage = 10;
 
-    public function loadMore(){
+    public function loadMore()
+    {
         $this->perPage += 10;
     }
 
-    public function createComment(string $post_id){
+    public function createComment(string $post_id)
+    {
         $this->post_id = $post_id;
         $this->user_id = auth()->user()->id;
-        if(HelperModel::setData($this->all(), Comment::class))
+        if (HelperModel::setData($this->all(), Comment::class))
             $this->reset();
     }
 
-    public function delete(string $id){
-        if(Post::whereId($id)->delete()){
+    public function delete(string $id)
+    {
+        if (Post::whereId($id)->delete()) {
             $this->redirect('/', navigate: true);
-            return session()->flash('success','Post removido');
+            return session()->flash('success', 'Post removido');
         }
-        return session()->flash('error','Falha ao remover.');
+        return session()->flash('error', 'Falha ao remover.');
     }
 
 
-    public function like(string $post_id){
+    public function like(string $post_id)
+    {
         $this->post_id = $post_id;
         $this->user_id = auth()->user()->id;
         $like = Like::wherePostId($this->post_id)->whereUserId($this->user_id)->first();
-        if(!$like){
+        if (!$like) {
             return Like::create([
                 'user_id' => $this->user_id,
                 'post_id' => $this->post_id,
@@ -52,7 +56,8 @@ class PostShow extends Component
         }
     }
 
-    public function unlike(string $post_id){
+    public function unlike(string $post_id)
+    {
         $this->post_id = $post_id;
         $this->user_id = auth()->user()->id;
         return Like::wherePostId($this->post_id)->whereUserId($this->user_id)->delete();

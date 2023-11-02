@@ -44,9 +44,6 @@ class CommentForm extends Component
 
     public function render()
     {
-        $comments = Comment::wherePostId($this->post_id)->orderBy('order','desc')->get();
-        $posts = Post::whereId($this->post_id)->get();
-        return view(
-            'livewire.comment.comment-form',['comments' => $comments,'posts' => $posts]);
+        return view('livewire.comment.comment-form');
     }
 }

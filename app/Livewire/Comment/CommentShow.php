@@ -4,18 +4,25 @@ namespace App\Livewire\Comment;
 
 use App\Models\Comment;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class CommentShow extends Component
 {
+    use WithPagination;
+    public $perPage = 10;
     public $post_id;
-    public $posts;
-    public function mount($post_id){
-        $this->posts = Comment::wherePostId($post_id)->get();
+
+    public function loadMore(){
+        $this->perPage += 10;
+    }
+
+    public function mount(string $post_id){
+        $this->post_id = $post_id;
     }
 
     public function render()
     {
-        
-        return view('livewire.comment.comment-show',['comments' => $this->posts]);
+        $comments = Comment::wherePostId($this->post_id)->latest('order')->paginate($this->perPage);
+        return view('livewire.comment.comment-show',['comments' => $comments]);
     }
 }

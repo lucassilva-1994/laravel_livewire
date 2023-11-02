@@ -16,6 +16,7 @@
                         <th wire:click="setSortBy('name')">Nome:</th>
                         <th wire:click="setSortBy('username')">Usuário:</th>
                         <th wire:click="setSortBy('email')">Email:</th>
+                        <th>Usuário desde:</th>
                         <th>Ações:</th>
                     </tr>
                 </thead>
@@ -25,6 +26,7 @@
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->username }}</td>
                             <td>{{ $user->email }}</td>
+                            <td>{{ $user->created_at }}</td>
                             <td>
                                 <button class="btn btn-danger btn-sm" type="button"
                                     wire:click="delete('{{ $user->id }}')"

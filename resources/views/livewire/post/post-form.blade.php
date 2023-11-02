@@ -5,7 +5,7 @@
             <form wire:submit="create">
                 <div class="mb-2">
                     <label for="title">Titulo:</label>
-                    <input type="text" placeholder="Titulo do post" class="form-control"
+                    <input type="text" placeholder="Titulo" class="form-control"
                         wire:model.live="title" autofocus />
                 </div>
                 <div class="mb-2">
@@ -17,7 +17,7 @@
                         Permitir comentário?
                     </label>
                 </div>
-                <div class="col-md-6 d-grid">
+                <div class="col-md-3 d-grid">
                     <button class="btn btn-primary">Postar</button>
                 </div>
             </form>

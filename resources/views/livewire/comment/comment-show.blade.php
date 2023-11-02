@@ -1,8 +1,5 @@
-<div>
+<div wire:poll.1s>
     <div class="row">
-        <span class="col-md-12">
-            <strong>{{ $comments->count() }} comentários.</strong>
-        </span>
         @foreach ($comments as $comment)
             <span class="col-md-2">
                 <strong>{{ $comment->user->username }}</strong>:
@@ -14,5 +11,8 @@
                 {{ $comment->created_at }}
             </span>
         @endforeach
+        @if ($comments->hasMorePages())
+            <button type="button" class="btn btn-primary" wire:click="loadMore">Carregar mais</button>
+        @endif
     </div>
 </div>

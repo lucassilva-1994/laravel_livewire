@@ -1,4 +1,4 @@
-<div wire:poll.10s>
+<div wire:poll.20s>
     @if ($posts->isNotEmpty())
         <div class="mt-3">
             @foreach ($posts as $post)
@@ -9,32 +9,38 @@
                     <div class="card-body">
                         <h5>{{ $post->content }}</h5>
                         @auth
-                            <span class="list-inline">
-
+                            <div class="d-flex flex-row">
                                 @if ($post->likes->count())
-                                    <h4><a href="" class="text-decoration-none text-danger list-inline-item"
+                                    <h4><a class="text-decoration-none text-primary"
                                             wire:click.prevent="unlike('{{ $post->id }}')"><i
-                                                class="bi bi-suit-heart-fill"></i> ({{ $post->likesPosts->count() }})</a>
+                                                class="bi bi-suit-heart-fill"></i>
+                                            ({{ $post->likesPosts->count() }})
+                                        </a>&nbsp;
                                     </h4>
                                 @else
-                                    <h4><a href="" class="text-decoration-none  text-secondary list-inline-item"
-                                            wire:click.prevent="like('{{ $post->id }}')"><i
-                                                class="bi bi-suit-heart"></i> ({{ $post->likesPosts->count() }})</a></h4>
+                                    <h4><a class="text-decoration-none  text-info"
+                                            wire:click.prevent="like('{{ $post->id }}')"><i class="bi bi-suit-heart"></i>
+                                            ({{ $post->likesPosts->count() }})</a>
+                                    </h4>&nbsp;
                                 @endif
-                                <h4><span class="text-decoration-none  text-primary list-inline-item"><i
-                                            class="bi bi-chat-left-text"></i>
+                                <h4><span class="text-decoration-none"><i class="bi bi-chat-left-text"></i>
                                         ({{ $post->comments->count() }})
-                                    </span></h4>
-                            </span>
+                                    </span></h4>&nbsp;&nbsp;
+                                @if ($post->user->id == auth()->user()->id)
+                                    <h4><a href="#" class="text-decoration-none  text-danger"
+                                            wire:confirm="Tem certeza que deseja excluir esse '{{ $post->title }}'?"
+                                            wire:click="delete('{{ $post->id }}')"><i class="bi bi-trash3-fill"></i></a>
+                                    </h4> &nbsp;&nbsp;
+                                    <h4><a class="text-decoration-none  text-success"
+                                            href="{{ route('post.edit', $post->id) }}" wire:navigate><i
+                                                class="bi bi-pencil-fill"></i></a></h4>
+                                @endif
+                            </div>
                             @foreach ($post->likesPosts as $users)
-                                {{ $users->user->username }} &nbsp;
+                                <a href="{{ route('user.profile', $users->user->id) }}" class="text-decoration-none text-secondary" wire:navigate>
+                                    <strong>{{ $users->user->username }} &nbsp;</strong>
+                                </a>
                             @endforeach
-                            @if ($post->user->id == auth()->user()->id)
-                                <button class="btn btn-danger btn-sm"
-                                    wire:click="delete('{{ $post->id }}')">Excluir</button>
-                                <a class="btn btn-success btn-sm" href="{{ route('post.edit', $post->id) }}"
-                                    wire:navigate>Editar</a>
-                            @endif
                             @if ($post->allowComments == true)
                                 <livewire:comment.comment-form post_id="{{ $post->id }}"
                                     wire:key="{{ $post->id }}"></livewire:comment.comment-form>
@@ -57,7 +63,8 @@
                     <div class="card-footer">
                         <div class="row">
                             <span class="col-md-4"><strong>Usuário: </strong>
-                                {{ $post->user->username }}
+                                <a href="{{ route('user.profile', $post->user->id) }}"
+                                    wire:navigate>{{ $post->user->username }}</a>
                             </span>
                             <span class="col-md-4">
                                 <strong>Criado em: </strong> {{ $post->created_at }}

@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg mb-3" style="background-color: #3a092a;">
+    <nav class="navbar navbar-expand-lg mb-3" style="background-color: rgb(21, 21, 104);">
         <div class="container">
             <h3><a href="{{ route('home') }}" class="text-white" wire:navigate><i class="bi bi-house"></i></a></h3>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu"
