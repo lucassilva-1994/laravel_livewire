@@ -1,10 +1,25 @@
-<div wire:poll.20s>
+<div wire:poll.1s>
+    <div class="mt-3">
+        <div class="row">
+            <div class="col-md-9">
+                <input type="search" class="form-control"
+                placeholder="Digite sua busca aqui..."
+                 wire:model.live="search"/>
+            </div>
+            <div class="col-md-3">
+                <select class="form-control" wire:model.live="orderBy">
+                    <option value="ASC">Mais antigo</option>
+                    <option value="DESC">Mais recente</option>
+                </select>
+            </div>
+        </div>
+    </div>
     @if ($posts->isNotEmpty())
         <div class="mt-3">
             @foreach ($posts as $post)
                 <div class="card mb-2">
                     <div class="card-header">
-                        <h4>{{ str($post->title)->words(3) }}</h4>
+                        <h4><strong>{{ $post->order }}</strong> - {{ str($post->title)->words(3) }}</h4>
                     </div>
                     <div class="card-body">
                         <h5>{{ $post->content }}</h5>
@@ -19,7 +34,8 @@
                                     </h4>
                                 @else
                                     <h4><a class="text-decoration-none  text-info"
-                                            wire:click.prevent="like('{{ $post->id }}')"><i class="bi bi-suit-heart"></i>
+                                            wire:click.prevent="like('{{ $post->id }}')"><i
+                                                class="bi bi-suit-heart"></i>
                                             ({{ $post->likesPosts->count() }})</a>
                                     </h4>&nbsp;
                                 @endif
@@ -36,12 +52,13 @@
                                                 class="bi bi-pencil-fill"></i></a></h4>
                                 @endif
                             </div>
-                            @foreach ($post->likesPosts as $users)
-                                <a href="{{ route('user.profile', $users->user->id) }}" class="text-decoration-none text-secondary" wire:navigate>
+                            @foreach ($post->likesPosts->load('user') as $users)
+                                <a href="{{ route('user.profile', $users->user->id) }}"
+                                    class="text-decoration-none text-secondary" wire:navigate>
                                     <strong>{{ $users->user->username }} &nbsp;</strong>
                                 </a>
                             @endforeach
-                            @if ($post->allowComments == true)
+                            @if ($post->allowComments == 'YES')
                                 <livewire:comment.comment-form post_id="{{ $post->id }}"
                                     wire:key="{{ $post->id }}"></livewire:comment.comment-form>
                             @endif
@@ -58,6 +75,12 @@
                                     {{ $comment->created_at }}
                                 </span>
                             @endforeach
+                        </div>
+                        <div class="row">
+                            @if (!auth()->check())
+                                <a href="{{ route('user.signin') }}" class="text-decoration-none text-success"
+                                    wire:navigate>Entre para se interagir com esse post.</a>
+                            @endif
                         </div>
                     </div>
                     <div class="card-footer">

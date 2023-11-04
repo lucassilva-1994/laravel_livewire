@@ -21,6 +21,10 @@
             <div class="collapse navbar-collapse justify-content-end" id="menu">
                 <ul class="navbar-nav">
                     <li class="nav-item">
+                        <a class="nav-link link-light" href="{{ route('home') }}" wire:navigate>
+                            <i class="bi bi-house"></i> Inicio</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link link-light" href="{{ route('users') }}" wire:navigate><i
                                 class="bi bi-people-fill"></i> Usuários</a>
                     </li>

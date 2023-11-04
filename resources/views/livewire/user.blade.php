@@ -5,9 +5,6 @@
     <span class="row mt-2">
         @include('message')
     </span>
-    <span class="row mt-2 text-secondary" wire:loading>
-            <strong>Carregando...</strong>
-    </span>
     @if ($users->isNotEmpty())
         <div class="table-responsive">
             <table class="table mt-1">
@@ -16,6 +13,7 @@
                         <th wire:click="setSortBy('name')">Nome:</th>
                         <th wire:click="setSortBy('username')">Usuário:</th>
                         <th wire:click="setSortBy('email')">Email:</th>
+                        <th>Posts</th>
                         <th>Usuário desde:</th>
                         <th>Ações:</th>
                     </tr>
@@ -26,11 +24,12 @@
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->username }}</td>
                             <td>{{ $user->email }}</td>
+                            <td>{{ $user->posts->count() }}</td>
                             <td>{{ $user->created_at }}</td>
                             <td>
                                 <button class="btn btn-danger btn-sm" type="button"
                                     wire:click="delete('{{ $user->id }}')"
-                                    wire:confirm="Tem certeza?">Excluir</button>
+                                    wire:confirm="Tem certeza que deseja excluir '{{ $user->username }}'">Excluir</button>
                             </td>
                         </tr>
                     @endforeach
@@ -38,7 +37,7 @@
                 <tfoot>
                     <tr>
                         <td>Por página:</td>
-                        <td colspan="3">
+                        <td colspan="5">
                             <select wire:model.live="perPage" class="form-control-sm">
                                 <option value="5">5</option>
                                 <option value="10">10</option>

@@ -9,6 +9,7 @@ use App\Livewire\{
     User
 };
 use App\Livewire\Post\PostEdit;
+use App\Livewire\Post\PostForm;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', Home::class)->name('home');
@@ -21,4 +22,4 @@ Route::prefix('/user')->group(function(){
     Route::get('/profile/{id}',Profile::class)->name('user.profile');
 });
 
-Route::get('/post/edit/{id}', PostEdit::class)->name('post.edit');
+Route::get('/post/edit/{post_id}', PostForm::class)->name('post.edit');

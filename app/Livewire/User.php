@@ -13,10 +13,10 @@ class User extends Component
 {
     use WithPagination;
     public $search;
-    public $perPage = 10;
+    public $perPage;
 
     public $sortBy = 'username';
-    public $sortDir = 'desc';
+    public $sortDir = 'DESC';
 
     public function setSortBy($sortByField){
         if($this->sortBy === $sortByField){
@@ -24,7 +24,7 @@ class User extends Component
             return;
         }
         $this->sortBy = $sortByField;
-        $this->sortDir = 'desc';
+        $this->sortDir = 'DESC';
     }
 
     #[Rule('required| min:3')]
@@ -66,8 +66,9 @@ class User extends Component
     public function render()
     {
         $title = "Usuários";
-        $users = ModelsUser::latest()->
-            where('name','like', "%{$this->search}%")
+        $users = ModelsUser::latest()
+            ->with('posts')
+            ->where('name','like', "%{$this->search}%")
             ->orWhere('email','like', "%{$this->search}%")
             ->orWhere('username','like', "%{$this->search}%")
             ->orderBy($this->sortBy, $this->sortDir)

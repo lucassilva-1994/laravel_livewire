@@ -11,6 +11,9 @@
                     <label for="password">Senha:</label>
                     <input type="password" class="form-control" id="password" wire:model="password" />
                 </div>
+                <div class="mb-3">
+                     <a class="text-decoration-none text-primary" href="{{ route('user.signup') }}" wire:navigate><i class="bi bi-person-plus-fill"></i> Ainda não tem conta? clique aqui para se cadastrar.</a> 
+                </div>
                 @include('message')
                 <div class="d-grid">
                     <button class="btn btn-success" wire.validate>Entrar</button>

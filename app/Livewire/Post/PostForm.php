@@ -17,7 +17,20 @@ class PostForm extends Component
     public $title;
     #[Rule('required|min:3|max:255')]
     public $content;
-    public $allowComments = true;
+    #[Rule('required')]
+    public $allowComments;
+    public $post_id;
+
+    public function mount(string $post_id = null){
+        $post = Post::find($post_id);
+        if($post){
+            $this->user_id = $post->user_id;
+            $this->post_id = $post->id;
+            $this->content = $post->content;
+            $this->title = $post->title;
+            $this->allowComments = $post->allowComments;
+        }
+    }
 
     public function updated($propertyName)
     {
@@ -28,30 +41,28 @@ class PostForm extends Component
     {
         $this->validate();
         $this->user_id = auth()->user()->id;
-        $this->allowComments == 1 ?  $this->allowComments = 1: $this->allowComments = 0;
         $this->dispatch('post-list');
         if(HelperModel::setData($this->all(), Post::class))
             $this->reset();
             return session()->flash('success','Post criado com sucesso.');
-        // for ($i = 0; $i < 20; $i++) {
-        //     $users = User::get();
-        //     foreach ($users as $user) {
-        //         HelperModel::setData([
-        //             'user_id' => $user->id,
-        //             'allowComments' => 1,
-        //             'title' => fake()->jobTitle(),
-        //             'content' => fake()->realText()
-        //         ], Post::class);
-        //     }
-        // }
-        // return session()->flash('success', 'Post criado com sucesso.');
         return session()->flash('error', 'Falha ao realizar post');
+    }
+
+    public function update(){
+        $this->validate();
+        if(HelperModel::updateData([
+            'title' => $this->title,
+            'content' => $this->content,
+            'allowComments' => $this->allowComments
+        ],Post::class,['id' => $this->post_id]));
+            return session()->flash('success','Post atualizado com sucesso.');
+        return session()->flash('error','Falha ao atualizar post');
     }
 
     #[Layout('components.layouts.app')]
     #[Title('Home')]
     public function render()
     {
-        return view('livewire.post.post-form');
+        return view('livewire.post.post-form',['post'=> $this->post_id]);
     }
 }

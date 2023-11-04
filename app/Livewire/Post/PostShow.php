@@ -14,14 +14,21 @@ use Livewire\WithPagination;
 class PostShow extends Component
 {
     use WithPagination;
+    public $search;
     public $post_id;
     public $user_id;
     public $comment;
     public $perPage = 10;
+    public $orderBy = 'DESC';
 
     public function loadMore()
     {
         $this->perPage += 10;
+    }
+
+    public function mount(string $user_id = null)
+    {
+        $this->user_id = $user_id;
     }
 
     public function createComment(string $post_id)
@@ -67,7 +74,10 @@ class PostShow extends Component
     #[On('post-list')]
     public function render()
     {
-        $posts = Post::latest('order')->with('comments')->paginate($this->perPage);
-        return view('livewire.post.post-show', compact('posts'));
+        $posts = Post::orderBy('order', $this->orderBy)
+        ->where('title','like',"%{$this->search}%")
+        ->orWhere('content','like',"%{$this->search}%")
+        ->with('comments')->paginate($this->perPage);
+        return view('livewire.post.post-show', compact(['posts']));
     }
 }

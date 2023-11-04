@@ -1,4 +1,4 @@
-<div wire:poll.1s>
+<div>
     <div class="row">
         @foreach ($comments as $comment)
             <span class="col-md-2">
